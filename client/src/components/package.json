@@ -9,5 +9,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC"
+  "proxy": "http://3.220.140.38:5000"
 }
 
