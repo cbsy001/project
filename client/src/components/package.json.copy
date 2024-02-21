@@ -1,0 +1,20 @@
+{
+  "name": "components",
+  "version": "1.0.0",
+  "description": "",
+  "main": "Home.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
+
+{
+  "scripts": {
+    "start": "react-scripts start",
+    // ... other scripts if any
+  },
+  // ... other configuration
+}

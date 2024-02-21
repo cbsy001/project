@@ -15,8 +15,8 @@ app.use(function(req, res, next) {
 // Configure MySQL connection
 const db = mysql.createConnection({
   host: 'localhost',
-  user: 'root',  // Use the MySQL user you created
-  password: 'zain_12345',  // Use the MySQL user password you specified
+  user: 'bilal',  // Use the MySQL user you created
+  password: 'bilal',  // Use the MySQL user password you specified
   database: 'sample_db',
 });
 
