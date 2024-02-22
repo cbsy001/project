@@ -1,5 +1,3 @@
-const https = require('https');
-const fs = require('fs');
 const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql2');
@@ -8,6 +6,7 @@ const app = express();
 const port = 5000;
 
 app.use(function(req, res, next) {
+  // Allow requests from all origins (adjust as needed for security)
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
@@ -35,36 +34,28 @@ app.use(bodyParser.json());
 
 // Routes
 app.post('/login', (req, res) => {
-  console.log("Req.body : ", req.body);
   const { username, password } = req.body;
-  const query = `select * from users where username="${req.body.username}" and password="${req.body.password}"`;
 
-  console.log("Query : ", query);
+  const query = `SELECT * FROM users WHERE username=? AND password=?`;
+  const values = [username, password];
 
-  db.query(query, (err, rows) => {
+  db.query(query, values, (err, rows) => {
     if (err) {
-      res.status(404).json({ success: false, message: 'Error fetching data from db' });
+      console.error('MySQL query error:', err);
+      res.status(500).json({ success: false, message: 'Error fetching data from db' });
       return;
     }
 
     if (rows.length >= 1) {
       res.status(200).json({ success: true, message: 'Login successful' });
       return;
+    } else {
+      res.status(401).json({ success: false, message: 'Invalid username or password' });
+      return;
     }
   });
 });
 
-// SSL certificate configurations
-const sslOptions = {
-  key: fs.readFileSync('/etc/letsencrypt/live/tbackend.kalsym.com.pk/privkey.pem'),
-  cert: fs.readFileSync('/etc/letsencrypt/live/tbackend.kalsym.com.pk/fullchain.pem'),
-  ca: fs.readFileSync('/etc/letsencrypt/live/tbackend.kalsym.com.pk/chain.pem'),
-};
-
-// Create HTTPS server
-const server = https.createServer(sslOptions, app);
-
-// Start server
-server.listen(port, () => {
+app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
