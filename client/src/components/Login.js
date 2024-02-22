@@ -10,10 +10,10 @@ const Login = () => {
 
   const handleLogin = () => {
 
-    console.log("Sending request to the backend : http://3.220.140.38:5000/login");
+    console.log("Sending request to the backend : https://tbackend.kalsym.com.pk:5000/login");
 
     
-    fetch('http://3.220.140.38:5000/login', {
+    fetch('https://tbackend.kalsym.com.pk:5000/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
